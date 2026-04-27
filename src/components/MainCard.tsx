@@ -2,11 +2,23 @@ import { ModalStep } from "@/pages/Index";
 
 interface MainCardProps {
   nulsBrawlUnlocked: boolean;
+  rygTestUnlocked: boolean;
+  secretBtnUnlocked: boolean;
   onGameClick: (step: ModalStep) => void;
   onNulsBrawl: () => void;
+  onRygTest: () => void;
+  onSecretBtn: () => void;
 }
 
-export default function MainCard({ nulsBrawlUnlocked, onGameClick, onNulsBrawl }: MainCardProps) {
+export default function MainCard({
+  nulsBrawlUnlocked,
+  rygTestUnlocked,
+  secretBtnUnlocked,
+  onGameClick,
+  onNulsBrawl,
+  onRygTest,
+  onSecretBtn,
+}: MainCardProps) {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 relative">
       <div className="text-center mb-12 fade-in-pixel">
@@ -50,6 +62,24 @@ export default function MainCard({ nulsBrawlUnlocked, onGameClick, onNulsBrawl }
               style={{ background: "var(--pixel-cyan)", color: "black" }}
             >
               ⭐ НУЛС БРАВЛ
+            </button>
+          )}
+          {rygTestUnlocked && (
+            <button
+              className="pixel-btn w-full text-[9px] mt-2"
+              onClick={onRygTest}
+              style={{ background: "var(--pixel-amber)", color: "black" }}
+            >
+              🧪 ТЕСТ НА РЫГА
+            </button>
+          )}
+          {secretBtnUnlocked && (
+            <button
+              className="pixel-btn w-full text-[9px] mt-2"
+              onClick={onSecretBtn}
+              style={{ background: "#111", color: "var(--pixel-dim)", border: "2px solid var(--pixel-dim)" }}
+            >
+              ???
             </button>
           )}
         </div>
