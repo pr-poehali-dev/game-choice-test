@@ -13,7 +13,7 @@ type ModalStep =
 export default function Index() {
   const [step, setStep] = useState<ModalStep>("none");
   const [countdown, setCountdown] = useState(10);
-  const [shake, setShake] = useState(false);
+  const [nulsClicked, setNulsClicked] = useState(false);
 
   useEffect(() => {
     if (step === "closing") {
@@ -31,27 +31,12 @@ export default function Index() {
     }
   }, [step]);
 
-  useEffect(() => {
-    if (shake) {
-      const t = setTimeout(() => setShake(false), 600);
-      return () => clearTimeout(t);
-    }
-  }, [shake]);
-
-  const triggerShake = () => {
-    setShake(false);
-    setTimeout(() => setShake(true), 10);
-  };
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 relative">
       {/* Header */}
       <div className="text-center mb-12 fade-in-pixel">
-        <div className="font-pixel text-[var(--pixel-amber)] glow-amber text-xs mb-2 blink">
-          ▶ GAME SELECT v1.0 ◀
-        </div>
         <h1 className="font-pixel text-[var(--pixel-green)] glow-green text-sm md:text-xl leading-loose glitch">
-          GAME STATION
+          ВЫБОР ГОДА
         </h1>
         <div className="font-pixel text-[var(--pixel-cyan)] text-[8px] mt-3 glow-cyan">
           === ДОБРО ПОЖАЛОВАТЬ ===
@@ -93,7 +78,7 @@ export default function Index() {
 
       {/* Footer */}
       <div className="mt-8 font-pixel text-[6px] text-[var(--pixel-dim)] flicker">
-        © 2024 GAME STATION | INSERT COIN
+        © 2024 ВЫБОР ГОДА
       </div>
 
       {/* ======= MODALS ======= */}
@@ -146,25 +131,21 @@ export default function Index() {
 
       {/* MODAL: И хотел поиграть в нулс? */}
       {step === "nuls_confirm" && (
-        <Modal onClose={() => setStep("none")}>
-          <p
-            className="font-pixel text-[var(--pixel-red)] glow-red text-[10px] leading-loose mb-6"
-          >
+        <Modal onClose={() => { setStep("none"); setNulsClicked(false); }}>
+          <p className="font-pixel text-[var(--pixel-red)] glow-red text-[10px] leading-loose mb-6">
             И хотел поиграть в нулс?
           </p>
           <div className="flex gap-3 justify-center">
             <button
               className="pixel-btn text-[8px]"
-              onClick={() => {
-                triggerShake();
-              }}
+              onClick={() => setNulsClicked(true)}
               style={{ background: "var(--pixel-red)", color: "white" }}
             >
               ДА
             </button>
           </div>
-          {shake && (
-            <p className="font-pixel text-[var(--pixel-red)] glow-red text-[9px] mt-4 leading-loose shake">
+          {nulsClicked && (
+            <p className="font-pixel text-[var(--pixel-red)] glow-red text-[9px] mt-4 leading-loose shake-infinite">
               Я не буду играть в него.
             </p>
           )}
