@@ -14,9 +14,12 @@ export default function Index() {
   const [step, setStep] = useState<ModalStep>("none");
   const [countdown, setCountdown] = useState(10);
   const [nulsClicked, setNulsClicked] = useState(false);
+  const [nulsBrawlUnlocked] = useState(() => localStorage.getItem("nuls_brawl_unlocked") === "true");
+  const [nulsBrawlModal, setNulsBrawlModal] = useState(false);
 
   useEffect(() => {
     if (step === "closing") {
+      localStorage.setItem("nuls_brawl_unlocked", "true");
       const interval = setInterval(() => {
         setCountdown((prev) => {
           if (prev <= 1) {
@@ -69,6 +72,15 @@ export default function Index() {
           >
             📝 ПРОЙТИ ТЕСТ НА ВСПЫША
           </button>
+          {nulsBrawlUnlocked && (
+            <button
+              className="pixel-btn w-full text-[9px] mt-2"
+              onClick={() => setNulsBrawlModal(true)}
+              style={{ background: "var(--pixel-cyan)", color: "black" }}
+            >
+              ⭐ НУЛС БРАВЛ
+            </button>
+          )}
         </div>
 
         <div className="mt-6 font-pixel text-[var(--pixel-dim)] text-[7px]">
@@ -78,7 +90,7 @@ export default function Index() {
 
       {/* Footer */}
       <div className="mt-8 font-pixel text-[6px] text-[var(--pixel-dim)] flicker">
-        © 2024 ВЫБОР ГОДА
+        © 2026 ВЫБОР ГОДА
       </div>
 
       {/* ======= MODALS ======= */}
@@ -212,6 +224,21 @@ export default function Index() {
             <span className="text-[var(--pixel-red)] glow-red">{countdown}</span>{" "}
             сек.
           </p>
+        </Modal>
+      )}
+
+      {/* MODAL: Нулс Бравл */}
+      {nulsBrawlModal && (
+        <Modal onClose={() => setNulsBrawlModal(false)}>
+          <p className="font-pixel text-[var(--pixel-cyan)] glow-cyan text-[10px] leading-loose mb-6">
+            Ок, можешь заходить.
+          </p>
+          <button
+            className="pixel-btn text-[8px]"
+            onClick={() => setNulsBrawlModal(false)}
+          >
+            ОК
+          </button>
         </Modal>
       )}
 
